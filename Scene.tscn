@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://cyqa6p6j7ne7w"]
+
+[ext_resource type="Script" uid="uid://bg3b8s6eachcv" path="res://Scripts/Combat.gd" id="1_t6lng"]
+
+[sub_resource type="GDScript" id="GDScript_j2eoc"]
+script/source = "extends Node
+class_name JRPGSignalBus
+
+#PUT SIGNALS HERE
+signal EndTurn;
+
+static var instance: JRPGSignalBus
+
+func _enter_tree():
+	if instance != null and instance != self:
+		queue_free()
+		return
+	instance = self
+
+func _exit_tree():
+	if instance == self:
+		instance = null
+"
+
+[node name="Combat" type="Node2D" unique_id=320433929]
+script = ExtResource("1_t6lng")
+
+[node name="JRPGSignalBus" type="Node" parent="." unique_id=778933315]
+script = SubResource("GDScript_j2eoc")
