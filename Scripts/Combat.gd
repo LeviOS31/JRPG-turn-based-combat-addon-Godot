@@ -14,5 +14,29 @@ enum TurnManagerStyle {
 }
 
 ## choice for which [b]TurnManager[/b] you want to use in combat
-
 @export var turnmanagerstyle: TurnManagerStyle = TurnManagerStyle.PerTeam
+## array of character for the players team [color=green][b]3 max[/b][/color]
+var PlayerTeam: Array[JRPGCharInstance]
+## array of character for the enemy team [color=green][b]3 max[/b][/color]
+var EnemyTeam: Array[JRPGCharInstance]
+
+func start():
+	match turnmanagerstyle:
+		TurnManagerStyle.PerTeam:
+			var preinstance = load("res://Scripts/TurnManagers/TurnManagerPerTeam.gd")
+			var instance : JRPGTurnManager = preinstance.instantiate() 
+			add_child(instance)
+			SetupPerTeam()
+		TurnManagerStyle.OrderTeam:
+			pass
+		TurnManagerStyle.OrderAternating:
+			pass
+		TurnManagerStyle.OrderStat:
+			pass
+		TurnManagerStyle.LooseOrderStat:
+			pass
+
+func SetupPerTeam():
+	for i:int in PlayerTeam.size():
+		var instance : JRPGBaseBattleChar = load("res://Scenes/BattleChars/" + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
+		

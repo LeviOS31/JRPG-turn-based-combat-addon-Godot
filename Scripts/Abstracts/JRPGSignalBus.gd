@@ -4,6 +4,8 @@ class_name JRPGSignalBus
 #PUT SIGNALS HERE
 signal StartTurn; #AddCharacterRef for effects
 signal EndTurn; #AddCharacterRef for effects
+signal PlayerTurn;
+signal EnemyTurn;
 
 static var instance: JRPGSignalBus
 

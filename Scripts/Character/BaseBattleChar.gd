@@ -1,2 +1,5 @@
 extends Node2D
-class_name BaseBattleChar
+class_name JRPGBaseBattleChar
+
+var Char : JRPGCharInstance
+var StatusEffects : Array
