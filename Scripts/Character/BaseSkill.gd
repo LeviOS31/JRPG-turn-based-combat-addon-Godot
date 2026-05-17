@@ -1,21 +1,35 @@
 extends Resource
 class_name JRPGBaseSkill
 
+@export_group("UI & Identity")
 @export var Name : String
-## Chance that the attack will even hit the target (Probably put to 100 for healing skills)
-@export var HitChance : int
-#@export var Type : JRPGEnums.AttackType (TO BE RECONSIDERD)
-## how much damage the attack can do (effected by strength and weakness of target)
-@export var Damage : int
-## For if the attack heals of damages
-@export var DamageType : JRPGEnums.DamageType
-## Name of the animation in the instance of BaseBattle animationplayer
+@export_multiline var Description : String
+@export var Icon : Texture2D
+## Name of the animation in the AnimationPlayer instance of BaseBattle.
 @export var AnimationName : String
-## Element of the attack (for weakness and strength)
-@export var Element : JRPGEnums.Elements
-## Type that can be target by the skill
+
+@export_group("Targeting & Costs")
+## Defines who can be targeted by this skill (e.g., Single Enemy, All Allies, Self).
 @export var Target : JRPGEnums.Target
-## effect that can lingers after the skill
+## What resource type this skill consumes.
+@export var CostType : JRPGEnums.CostType = JRPGEnums.CostType.Magik
+## How much of the CostType resource is consumed. 0 = no cost.
+@export var Cost : int = 0
+
+@export_group("Accuracy & Attributes")
+## Chance (0 to 100) that the skill will successfully hit the target. (Usually 100 for healing/buffs).
+@export_range(0, 100) var HitChance : int = 100
+## Is this skill meant to deal damage or heal?
+@export var DamageType : JRPGEnums.DamageType
+## Elemental attribute of the attack (used to calculate target strengths and weaknesses).
+@export var Element : JRPGEnums.Elements
+
+@export_group("Mechanics & Math")
+## Base power of the skill before stat calculations are applied.
+@export var BaseDamage : int
+## How many times this skill strikes the target(s) per use.
+@export var HitCount : int = 1
+
+@export_group("Status Effects")
+## An optional status effect that can linger on the target over multiple turns after the skill hits.
 @export var Effect : JRPGBaseEffect
-## cost of the skill in terms of something like [b]Mana[/b] 0 = no cost
-@export var Cost : int 

@@ -7,6 +7,12 @@ signal EndTurn; #AddCharacterRef for effects
 signal PlayerTurn;
 signal EnemyTurn;
 
+signal Start(pos : Vector2, char : JRPGBaseBattleChar);
+signal StartDone;
+signal Clicked(char : JRPGBaseBattleChar);
+signal MouseOver(char : JRPGBaseBattleChar);
+signal MouseOut(char : JRPGBaseBattleChar);
+
 static var instance: JRPGSignalBus
 
 func _enter_tree():

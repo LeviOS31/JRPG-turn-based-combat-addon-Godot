@@ -43,13 +43,30 @@ enum Elements{
 }
 
 enum StatTarget{
-	Damage,
+	Health,
+	Magic,
 	Hit_Chance,
-	Max_Health,
 	Defense,
+	Speed,
+	Strength
 }
 
 enum  Team{
 	Player,
 	Enemy
+}
+
+enum EffectType{
+	Modify,
+	Tickperturn
+}
+
+enum CalcType{
+	flat,
+	percentage
+}
+
+enum  CostType{
+	Health,
+	Magik,
 }
