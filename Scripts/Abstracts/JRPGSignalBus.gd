@@ -13,6 +13,12 @@ signal Clicked(char : JRPGBaseBattleChar);
 signal MouseOver(char : JRPGBaseBattleChar);
 signal MouseOut(char : JRPGBaseBattleChar);
 
+#UI Signals
+signal ResultToUI(text: String);
+signal UpdateHighlight();
+signal SetSelectedChar(char : JRPGBaseBattleChar);
+signal SetHighlightState(State: JRPGEnums.HighlightState)
+
 static var instance: JRPGSignalBus
 
 func _enter_tree():

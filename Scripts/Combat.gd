@@ -15,6 +15,8 @@ enum TurnManagerStyle {
 
 ## choice for which [b]TurnManager[/b] you want to use in combat
 @export var turnmanagerstyle: TurnManagerStyle = TurnManagerStyle.PerTeam
+@export var PlayerTeamNode: Node2D
+@export var EnemyTeamNode: Node2D
 ## array of character for the players team [color=green][b]3 max[/b][/color]
 var PlayerTeam: Array[JRPGCharInstance]
 ## array of character for the enemy team [color=green][b]3 max[/b][/color]
@@ -24,7 +26,7 @@ func start():
 	match turnmanagerstyle:
 		TurnManagerStyle.PerTeam:
 			var preinstance = load("res://Scripts/TurnManagers/TurnManagerPerTeam.gd")
-			var instance : JRPGTurnManager = preinstance.instantiate() 
+			var instance : JRPGTurnManager = preinstance.instantiate()
 			add_child(instance)
 			SetupPerTeam()
 		TurnManagerStyle.OrderTeam:
@@ -36,7 +38,27 @@ func start():
 		TurnManagerStyle.LooseOrderStat:
 			pass
 
-func SetupPerTeam():
+func LoadChars() -> Array[JRPGCharInstance]: 
+	var characters: Array[JRPGCharInstance] 
+	
 	for i:int in PlayerTeam.size():
 		var instance : JRPGBaseBattleChar = load("res://Scenes/BattleChars/" + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
-		
+		instance.add_to_group("BattleChar")
+		instance.Team = JRPGEnums.Team.Player
+		characters.push_back(instance)
+		PlayerTeamNode.add_child(instance)
+		instance.global_position = PlayerTeamNode.get_child(i).global_position - Vector2(450,0)
+	
+	for i:int in EnemyTeam.size():
+		var instance : JRPGBaseBattleChar = load("res://Scenes/BattleChars/" + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
+		instance.add_to_group("BattleChar")
+		instance.Team = JRPGEnums.Team.Enemy
+		characters.push_back(instance)
+		EnemyTeamNode.add_child(instance)
+		instance.global_position = EnemyTeamNode.get_child(i).global_position + Vector2(450,0)
+	
+	return characters
+
+func SetupPerTeam():
+	var Characters = LoadChars()
+	

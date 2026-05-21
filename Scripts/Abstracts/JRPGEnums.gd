@@ -70,3 +70,19 @@ enum  CostType{
 	Health,
 	Magik,
 }
+
+enum EffectDuration{
+	## Adds duration of effects together
+	Add,
+	## Sets duration to the amount set in the effect
+	Refresh,
+	## Doesnt apply effect
+	Ignore,
+}
+
+enum HighlightState {
+	NONE,
+	SELECTABLE_PLAYER,
+	TARGET_ENEMY,
+	TARGET_ALLY,
+}

@@ -26,3 +26,6 @@ func _init(_species: JRPGSpecies, _level := 1):
 func recalc_stats():
 	max_hp = species.Max_Base_HP + species.HP_Growth * (level - 1)
 	max_magi = species.Max_Base_Magi + species.Magi_Growth * (level - 1)
+
+func IsAlive()-> bool:
+	return current_hp > 0

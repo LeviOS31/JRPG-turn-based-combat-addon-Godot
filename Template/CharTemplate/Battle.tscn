@@ -1,17 +1,23 @@
 [gd_scene format=3 uid="uid://dulryqadvnbn4"]
 
-[ext_resource type="Texture2D" uid="uid://iktjapb60i0g" path="res://Template/Human Male Model/Human Male Model-Sheet.png" id="1_5rscq"]
+[ext_resource type="Texture2D" uid="uid://iktjapb60i0g" path="res://assets/Human Male Model/Human Male Model-Sheet.png" id="1_5rscq"]
 [ext_resource type="Script" uid="uid://i5f8emg47xx7" path="res://Scripts/Character/BaseBattleChar.gd" id="1_hjrat"]
+[ext_resource type="Shader" uid="uid://dxbhn3mahwbve" path="res://assets/shaders/Outline.gdshader" id="1_j0cg7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jaieb"]
+shader = ExtResource("1_j0cg7")
+shader_parameter/outline_enabled = true
+shader_parameter/outline_color = Color(0.93, 0.5425, 0, 1)
+shader_parameter/outline_size = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5rscq"]
 size = Vector2(12, 26)
 
-[node name="BattlecharTemplate" type="Node2D" unique_id=295920791]
-script = ExtResource("1_hjrat")
-
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1054651751]
+[node name="BattlecharTemplate" type="Sprite2D" unique_id=462627241]
+material = SubResource("ShaderMaterial_jaieb")
 texture = ExtResource("1_5rscq")
 hframes = 254
+script = ExtResource("1_hjrat")
 
 [node name="Animationplayer" type="AnimationPlayer" parent="." unique_id=388845688]
 
