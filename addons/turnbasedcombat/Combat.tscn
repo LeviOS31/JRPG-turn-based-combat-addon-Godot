@@ -1,0 +1,177 @@
+[gd_scene format=3 uid="uid://cyqa6p6j7ne7w"]
+
+[ext_resource type="Script" uid="uid://bg3b8s6eachcv" path="res://addons/turnbasedcombat/Scripts/Combat.gd" id="1_vvyul"]
+[ext_resource type="Script" uid="uid://b1bphcew07teq" path="res://addons/turnbasedcombat/Scripts/Abstracts/JRPGSignalBus.gd" id="2_tppsp"]
+[ext_resource type="Script" uid="uid://1a0ux03uad35" path="res://addons/turnbasedcombat/Scripts/Abstracts/HighlightManager.gd" id="3_lnhn1"]
+[ext_resource type="Script" uid="uid://bd0t0qvyl3pa7" path="res://addons/turnbasedcombat/Scripts/MainUI.gd" id="4_rk2tg"]
+[ext_resource type="Texture2D" uid="uid://5av482ey5eyy" path="res://addons/turnbasedcombat/assets/TempBackground.png" id="4_wvr50"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wvr50"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rk2tg"]
+bg_color = Color(0.18717638, 0.18717605, 0.18717617, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_72455"]
+bg_color = Color(0.07284262, 0.072842635, 0.072842576, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6nfr"]
+bg_color = Color(0.12591085, 0.12591085, 0.12591082, 1)
+
+[node name="Combat" type="Node2D" unique_id=320433929 node_paths=PackedStringArray("PlayerTeamNode", "EnemyTeamNode")]
+script = ExtResource("1_vvyul")
+PlayerTeamNode = NodePath("Characters/Player")
+EnemyTeamNode = NodePath("Characters/Enemy")
+
+[node name="JRPGSignalBus" type="Node" parent="." unique_id=778933315]
+script = ExtResource("2_tppsp")
+
+[node name="HighlightManager" type="Node" parent="." unique_id=404079307]
+script = ExtResource("3_lnhn1")
+
+[node name="UI" type="Control" parent="." unique_id=1626737244]
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("4_rk2tg")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="UI" unique_id=1827207403]
+layout_mode = 0
+offset_right = 1154.0
+offset_bottom = 649.0
+texture = ExtResource("4_wvr50")
+
+[node name="Main UI" type="Panel" parent="UI" unique_id=1186781270]
+self_modulate = Color(0.37413925, 0.37413928, 0.37413922, 1)
+layout_mode = 0
+offset_left = -10.0
+offset_top = 477.0
+offset_right = 1162.0
+offset_bottom = 660.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_wvr50")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Main UI" unique_id=1605247679]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 7.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="Textbox" type="Panel" parent="UI/Main UI/HBoxContainer" unique_id=1739654233]
+self_modulate = Color(0.2627451, 0.2627451, 0.2627451, 1)
+custom_minimum_size = Vector2(500, 160)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wvr50")
+
+[node name="ActionHistory" type="RichTextLabel" parent="UI/Main UI/HBoxContainer/Textbox" unique_id=1058791051]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+text = "> Player attacked ____ for 10 damage
+> Enemy attacked ____ for 2 damage
+> ___ is burning for X rounds
+> Enemy healed ____ for 10 health"
+scroll_active = false
+scroll_following = true
+
+[node name="Buttonbox" type="Panel" parent="UI/Main UI/HBoxContainer" unique_id=420442375]
+self_modulate = Color(0.26293245, 0.26293245, 0.26293245, 1)
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_wvr50")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/Main UI/HBoxContainer/Buttonbox" unique_id=1696529786]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Main UI/HBoxContainer/Buttonbox/HBoxContainer" unique_id=1419918052]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Button" type="Button" parent="UI/Main UI/HBoxContainer/Buttonbox/HBoxContainer/VBoxContainer" unique_id=2142936246]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_rk2tg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_72455")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h6nfr")
+text = "Skills"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="UI/Main UI/HBoxContainer/Buttonbox/HBoxContainer" unique_id=847333410]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Button2" type="Button" parent="UI/Main UI/HBoxContainer/Buttonbox/HBoxContainer/VBoxContainer2" unique_id=164637485]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_rk2tg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_72455")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h6nfr")
+text = "Run
+"
+
+[node name="Characters" type="Node2D" parent="." unique_id=1104721024]
+
+[node name="Player" type="Node2D" parent="Characters" unique_id=1843793639]
+
+[node name="P1" type="Marker2D" parent="Characters/Player" unique_id=2111679803]
+position = Vector2(296, 358)
+gizmo_extents = 20.0
+
+[node name="P2" type="Marker2D" parent="Characters/Player" unique_id=768652608]
+position = Vector2(221, 249)
+gizmo_extents = 20.0
+
+[node name="P3" type="Marker2D" parent="Characters/Player" unique_id=382518166]
+position = Vector2(179, 436)
+gizmo_extents = 20.0
+
+[node name="Enemy" type="Node2D" parent="Characters" unique_id=1315091793]
+position = Vector2(1152, 0)
+
+[node name="E1" type="Marker2D" parent="Characters/Enemy" unique_id=1663858878]
+position = Vector2(-343, 352)
+gizmo_extents = 20.0
+
+[node name="E2" type="Marker2D" parent="Characters/Enemy" unique_id=788095415]
+position = Vector2(-204, 248)
+gizmo_extents = 20.0
+
+[node name="E3" type="Marker2D" parent="Characters/Enemy" unique_id=669835462]
+position = Vector2(-246, 435)
+gizmo_extents = 20.0

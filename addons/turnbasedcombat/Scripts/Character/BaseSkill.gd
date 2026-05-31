@@ -27,7 +27,8 @@ class_name JRPGBaseSkill
 @export_group("Mechanics & Math")
 ## Base power of the skill before stat calculations are applied.
 @export var BaseDamage: int
-## How many times this skill strikes the target(s) per use.
+## How many times this skill strikes the target(s) per use.[br]
+## [color=red][b]NOT YET IMPLEMENTED[/b][/color]
 @export var HitCount: int = 1
 
 @export_group("Status Effects")

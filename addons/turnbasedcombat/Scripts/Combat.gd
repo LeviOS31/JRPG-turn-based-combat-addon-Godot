@@ -17,6 +17,8 @@ enum TurnManagerStyle {
 @export var turnmanagerstyle: TurnManagerStyle = TurnManagerStyle.PerTeam
 @export var PlayerTeamNode: Node2D
 @export var EnemyTeamNode: Node2D
+## Filepath where all you character for the turn based combat are. they need to be structured like: res://[yourfolders]/[example]Battlechars/[speciesname]/Battle.tscn the structure is important otherwise this won't be able to find the characters. To see an example look at the template scene
+@export var CharactersPath: String
 ## array of character for the players team [color=green][b]3 max[/b][/color]
 var PlayerTeam: Array[JRPGCharInstance]
 ## array of character for the enemy team [color=green][b]3 max[/b][/color]
@@ -25,8 +27,8 @@ var EnemyTeam: Array[JRPGCharInstance]
 func start():
 	match turnmanagerstyle:
 		TurnManagerStyle.PerTeam:
-			var preinstance = load("res://Scripts/TurnManagers/TurnManagerPerTeam.gd")
-			var instance : JRPGTurnManager = preinstance.instantiate()
+			var preinstance = load("res://addons/turnbasedcombat/Scripts/TurnManagers/TurnManagerPerTeam.gd")
+			var instance : JRPGTurnManager = preinstance.new()
 			add_child(instance)
 			SetupPerTeam()
 		TurnManagerStyle.OrderTeam:
@@ -38,27 +40,39 @@ func start():
 		TurnManagerStyle.LooseOrderStat:
 			pass
 
-func LoadChars() -> Array[JRPGCharInstance]: 
-	var characters: Array[JRPGCharInstance] 
+func LoadChars() -> Array[JRPGBaseBattleChar]: 
+	var characters: Array[JRPGBaseBattleChar] 
 	
 	for i:int in PlayerTeam.size():
-		var instance : JRPGBaseBattleChar = load("res://Scenes/BattleChars/" + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
+		var instance : JRPGBaseBattleChar = load(CharactersPath + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
 		instance.add_to_group("BattleChar")
 		instance.Team = JRPGEnums.Team.Player
 		characters.push_back(instance)
 		PlayerTeamNode.add_child(instance)
 		instance.global_position = PlayerTeamNode.get_child(i).global_position - Vector2(450,0)
+		instance.Char = PlayerTeam[i]
 	
 	for i:int in EnemyTeam.size():
-		var instance : JRPGBaseBattleChar = load("res://Scenes/BattleChars/" + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
+		var instance : JRPGBaseBattleChar = load(CharactersPath + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
 		instance.add_to_group("BattleChar")
 		instance.Team = JRPGEnums.Team.Enemy
 		characters.push_back(instance)
 		EnemyTeamNode.add_child(instance)
 		instance.global_position = EnemyTeamNode.get_child(i).global_position + Vector2(450,0)
+		instance.Char = PlayerTeam[i]
 	
 	return characters
 
 func SetupPerTeam():
-	var Characters = LoadChars()
+	var Characters: Array[JRPGBaseBattleChar] = LoadChars()
 	
+	var i := 0
+	var j := 0
+	
+	for char:JRPGBaseBattleChar in Characters:
+		if char.Team == JRPGEnums.Team.Player:
+			char.playstart(PlayerTeamNode.get_child(i).global_position)
+			i += 1
+		elif char.Team == JRPGEnums.Team.Enemy:
+			char.playstart(EnemyTeamNode.get_child(j).global_position)
+			j += 1

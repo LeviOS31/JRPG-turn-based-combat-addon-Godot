@@ -1,8 +1,7 @@
-extends Node2D
-class_name JRPGTurnManager
+extends JRPGTurnManager
 
-var PlayerTeam = Array[JRPGBaseBattleChar]
-var EnemyTeam = Array[JRPGBaseBattleChar]
+var PlayerTeam: Array[JRPGBaseBattleChar]
+var EnemyTeam: Array[JRPGBaseBattleChar]
 var turn := 0;
 
 var TargetAlly: bool
@@ -26,7 +25,7 @@ func Turn():
 	if turn == 0:
 		turn = 1
 		
-		for i:int in PlayerTeam:
+		for i:int in PlayerTeam.size():
 			PlayerTeam[i].AvailableAction = true
 		
 		JRPGSignalBus.instance.emit_signal("PlayerTurn")
@@ -39,7 +38,7 @@ func Turn():
 func CheckPlayerTurn():
 	var playerturn := true
 	
-	for i:int in PlayerTeam:
+	for i:int in PlayerTeam.size():
 		var character: JRPGBaseBattleChar = PlayerTeam[i]
 		if character.Char.IsAlive() && character.AvailableAction:
 			playerturn = false;
@@ -62,11 +61,7 @@ func SelectTarget(MouseTarget: JRPGBaseBattleChar):
 		CheckPlayerTurn()
 	elif MouseTarget.Team == JRPGEnums.Team.Player && SelectedCharacter == null && MouseTarget.AvailableAction:
 		SelectedCharacter = MouseTarget
-		JRPGSignalBus.instance.SetSelectedChar.emit(MouseTarget)
-		FillUI(SelectedCharacter)
-
-func FillUI(Character: JRPGBaseBattleChar):
-	pass
+		JRPGSignalBus.instance.SelectedChar.emit(MouseTarget)
 
 func PrepareSkillTargeting(Skill: JRPGBaseSkill):
 	if Skill == null:

@@ -16,7 +16,7 @@ signal MouseOut(char : JRPGBaseBattleChar);
 #UI Signals
 signal ResultToUI(text: String);
 signal UpdateHighlight();
-signal SetSelectedChar(char : JRPGBaseBattleChar);
+signal SelectedChar(char : JRPGBaseBattleChar);
 signal SetHighlightState(State: JRPGEnums.HighlightState)
 
 static var instance: JRPGSignalBus

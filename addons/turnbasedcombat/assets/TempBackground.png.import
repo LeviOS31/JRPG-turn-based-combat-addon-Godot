@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://iktjapb60i0g"
-path="res://.godot/imported/Human Male Model-Sheet.png-fa34bbd0f3031b4962ac5ae70947e616.ctex"
+uid="uid://5av482ey5eyy"
+path="res://.godot/imported/TempBackground.png-54df7c0239cfcccadab3e0dc145fb275.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Human Male Model/Human Male Model-Sheet.png"
-dest_files=["res://.godot/imported/Human Male Model-Sheet.png-fa34bbd0f3031b4962ac5ae70947e616.ctex"]
+source_file="res://addons/turnbasedcombat/assets/TempBackground.png"
+dest_files=["res://.godot/imported/TempBackground.png-54df7c0239cfcccadab3e0dc145fb275.ctex"]
 
 [params]
 

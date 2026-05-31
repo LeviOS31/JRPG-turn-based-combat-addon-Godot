@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="TurnBasedCombatAddon"
+run/main_scene="uid://rkef2vnimcur"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/turnbasedcombat/plugin.cfg")
 
 [physics]
 

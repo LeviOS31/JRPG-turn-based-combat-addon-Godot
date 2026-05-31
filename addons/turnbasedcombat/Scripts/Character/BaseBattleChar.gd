@@ -11,13 +11,10 @@ var AvailableAction := false
 func _ready() -> void:
 	Animator = $Animationplayer
 
-func playstart(pos : Vector2, Char : Node2D):
-	if Char != self:
-		pass
-	
+func playstart(pos : Vector2):
 	var tween = get_tree().create_tween()
 	
-	var time := 0.05 * global_position.distance_to(pos)
+	var time := 0.01 * global_position.distance_to(pos)
 	tween.tween_property(self, "global_position", pos, time)
 	
 	if pos.x > global_position.x:
