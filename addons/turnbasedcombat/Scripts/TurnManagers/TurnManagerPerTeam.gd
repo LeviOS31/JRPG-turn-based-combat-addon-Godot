@@ -1,25 +1,24 @@
 extends JRPGTurnManager
 
-var PlayerTeam: Array[JRPGBaseBattleChar]
-var EnemyTeam: Array[JRPGBaseBattleChar]
+
 var turn := 0;
 
 var TargetAlly: bool
 var TargetEnemy: bool
 var SelectedSkill: JRPGBaseSkill
-var SelectedCharacter: JRPGBaseBattleChar
 
 func _ready() -> void:
 	JRPGSignalBus.instance.PlayerTurn.connect(CheckPlayerTurn)
 	JRPGSignalBus.instance.EndTurn.connect(Turn)
 	JRPGSignalBus.instance.Clicked.connect(SelectTarget)
+	JRPGSignalBus.instance.SelectedSkill.connect(PrepareSkillTargeting)
+	
+	await JRPGSignalBus.instance.StartDone
+	Turn()
 
 func _physics_process(delta: float) -> void:
 	#TODO: replace Highlight state
-	if turn == 1:
-		JRPGSignalBus.instance.UpdateHighlight.emit();
-	else:
-		JRPGSignalBus.instance.UpdateHighlight.emit();
+	JRPGSignalBus.instance.UpdateHighlight.emit();
 
 func Turn():
 	if turn == 0:
@@ -56,8 +55,10 @@ func SelectTarget(MouseTarget: JRPGBaseBattleChar):
 	if (TargetAlly && MouseTarget.Team == JRPGEnums.Team.Player) || (TargetEnemy && MouseTarget.Team == JRPGEnums.Team.Enemy):
 		TargetAlly = false
 		TargetEnemy = false
-		SelectedCharacter.available_action = false;
+		SelectedCharacter.AvailableAction = false;
 		await SelectedSkill.Activate(SelectedCharacter, [MouseTarget])
+		JRPGSignalBus.instance.SetSelectedChar.emit(null)
+		JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.SELECTABLE_PLAYER)
 		CheckPlayerTurn()
 	elif MouseTarget.Team == JRPGEnums.Team.Player && SelectedCharacter == null && MouseTarget.AvailableAction:
 		SelectedCharacter = MouseTarget
@@ -76,7 +77,7 @@ func PrepareSkillTargeting(Skill: JRPGBaseSkill):
 					enemies.append(node)
 			SelectedSkill.activate(SelectedCharacter, enemies)
 			JRPGSignalBus.instance.SetSelectedChar.emit(null)
-			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.NONE)
+			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.SELECTABLE_PLAYER)
 			
 		JRPGEnums.Target.Enemy:
 			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.TARGET_ENEMY)
@@ -89,7 +90,7 @@ func PrepareSkillTargeting(Skill: JRPGBaseSkill):
 					allies.append(node)
 			SelectedSkill.activate(SelectedCharacter, allies)
 			JRPGSignalBus.instance.SetSelectedChar.emit(null)
-			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.NONE)
+			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.SELECTABLE_PLAYER)
 			
 		JRPGEnums.Target.Ally:
 			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.TARGET_ALLY)
@@ -98,7 +99,7 @@ func PrepareSkillTargeting(Skill: JRPGBaseSkill):
 		JRPGEnums.Target.Self:
 			SelectedSkill.activate(SelectedCharacter, [SelectedCharacter])
 			JRPGSignalBus.instance.SetSelectedChar.emit(null)
-			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.NONE)
+			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.SELECTABLE_PLAYER)
 			
 		_:
 			JRPGSignalBus.instance.SetSelectedChar.emit(null)

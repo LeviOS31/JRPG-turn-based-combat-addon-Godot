@@ -23,13 +23,14 @@ enum TurnManagerStyle {
 var PlayerTeam: Array[JRPGCharInstance]
 ## array of character for the enemy team [color=green][b]3 max[/b][/color]
 var EnemyTeam: Array[JRPGCharInstance]
+var TurnManagerinstance: JRPGTurnManager
 
 func start():
 	match turnmanagerstyle:
 		TurnManagerStyle.PerTeam:
 			var preinstance = load("res://addons/turnbasedcombat/Scripts/TurnManagers/TurnManagerPerTeam.gd")
-			var instance : JRPGTurnManager = preinstance.new()
-			add_child(instance)
+			TurnManagerinstance = preinstance.new()
+			add_child(TurnManagerinstance)
 			SetupPerTeam()
 		TurnManagerStyle.OrderTeam:
 			pass
@@ -51,6 +52,8 @@ func LoadChars() -> Array[JRPGBaseBattleChar]:
 		PlayerTeamNode.add_child(instance)
 		instance.global_position = PlayerTeamNode.get_child(i).global_position - Vector2(450,0)
 		instance.Char = PlayerTeam[i]
+		
+		TurnManagerinstance.PlayerTeam.append(instance)
 	
 	for i:int in EnemyTeam.size():
 		var instance : JRPGBaseBattleChar = load(CharactersPath + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
@@ -60,6 +63,8 @@ func LoadChars() -> Array[JRPGBaseBattleChar]:
 		EnemyTeamNode.add_child(instance)
 		instance.global_position = EnemyTeamNode.get_child(i).global_position + Vector2(450,0)
 		instance.Char = PlayerTeam[i]
+		
+		TurnManagerinstance.EnemyTeam.append(instance)
 	
 	return characters
 

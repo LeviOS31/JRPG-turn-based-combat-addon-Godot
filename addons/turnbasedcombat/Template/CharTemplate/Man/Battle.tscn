@@ -5,8 +5,9 @@
 [ext_resource type="Script" uid="uid://i5f8emg47xx7" path="res://addons/turnbasedcombat/Scripts/Character/BaseBattleChar.gd" id="3_fa118"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jaieb"]
+resource_local_to_scene = true
 shader = ExtResource("1_a3g2v")
-shader_parameter/outline_enabled = true
+shader_parameter/outline_enabled = false
 shader_parameter/outline_color = Color(0.93, 0.5425, 0, 1)
 shader_parameter/outline_size = 1.0
 

@@ -33,18 +33,18 @@ func ApplyDamage(Amount: int, DamageType: JRPGEnums.DamageType, Element: JRPGEnu
 		Char.current_hp = clampi(Char.current_hp + Amount, Char.current_hp, Char.max_hp)
 
 func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseBattleChar, hovered: JRPGBaseBattleChar) -> void:
-	HighLight(false, Color(0.781, 0.781, 0.781, 1.0))
 	match state:
 		JRPGEnums.HighlightState.SELECTABLE_PLAYER:
 			if Team != JRPGEnums.Team.Player: 
 				HighLight(false, Color(0.781, 0.781, 0.781, 1.0))
+				return
 				
 			if self == selected:
 				HighLight(true, Color(0.97, 1.0, 0.445, 1.0))
 			elif self == hovered && AvailableAction:
 				HighLight(true, Color(0.97, 1.0, 0.445, 1.0))
 			elif AvailableAction:
-				HighLight(true, Color(0.781, 0.781, 0.781, 1.0))
+				HighLight(true, Color(0.644, 0.357, 0.0, 1.0))
 
 		JRPGEnums.HighlightState.TARGET_ENEMY:
 			# Special case: Always keep the acting player highlighted yellow
@@ -55,6 +55,8 @@ func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseB
 			if Team == JRPGEnums.Team.Enemy:
 				var red = Color(1.0, 0.242, 0.242, 1.0) if self == hovered else Color(0.473, 0.0, 0.0, 1.0)
 				HighLight(true, red)
+			else:
+				HighLight(false, Color(0.781, 0.781, 0.781, 1.0))
 
 		JRPGEnums.HighlightState.TARGET_ALLY:
 			if Team == JRPGEnums.Team.Player:
@@ -64,6 +66,8 @@ func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseB
 					HighLight(true, Color(0.97, 1.0, 0.445, 1.0))
 				else:
 					HighLight(true, Color(0.0, 0.512, 0.0, 1.0))
+			else:
+				HighLight(false, Color(0.781, 0.781, 0.781, 1.0))
 
 
 func _on_select_area_mouse_entered() -> void:
@@ -73,7 +77,9 @@ func _on_select_area_mouse_exited() -> void:
 	JRPGSignalBus.instance.MouseOut.emit(self)
 
 func _on_select_area_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	JRPGSignalBus.instance.Clicked.emit(self)
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			JRPGSignalBus.instance.Clicked.emit(self)
 
 func HighLight(enable: bool, color: Color):
 	material.set_shader_parameter("outline_enabled", enable)
