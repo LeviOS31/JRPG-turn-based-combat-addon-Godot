@@ -36,7 +36,6 @@ class_name JRPGBaseSkill
 @export var Effect: JRPGBaseEffect
 
 func Activate(Caster: JRPGBaseBattleChar, Targets: Array[JRPGBaseBattleChar]):
-	var textforUI: String
 	randomize()
 	
 	if !Caster:
@@ -51,7 +50,7 @@ func Activate(Caster: JRPGBaseBattleChar, Targets: Array[JRPGBaseBattleChar]):
 	if !Caster.Animator.has_animation(AnimationName):
 		push_error("Error: Casters AnimationPlayer does not have animation: " + AnimationName)
 		return
-	
+	JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.NONE);
 	Caster.Animator.play(AnimationName)
 	
 	await Caster.Animator.SkillDone
@@ -62,13 +61,12 @@ func Activate(Caster: JRPGBaseBattleChar, Targets: Array[JRPGBaseBattleChar]):
 		
 		if HitChance < 100:
 			if !randi_range(0, 99) < HitChance:
-				textforUI += Name + " missed " + target.Char.species.Name + "\n"
+				JRPGSignalBus.instance.ResultToUI.emit(Name + " missed " + target.Char.species.Name)
 				continue
 		
 		var FinalDamage := BaseDamage
 		
 		target.ApplyDamage(FinalDamage, DamageType, Element, Caster)
-		textforUI += Name + " hit " + target.Char.species.Name + "for" + str(FinalDamage) + "\n"
 		
 		if Effect:
 			Effect.tryapply()

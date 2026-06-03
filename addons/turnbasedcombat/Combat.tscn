@@ -50,7 +50,7 @@ offset_right = 1154.0
 offset_bottom = 649.0
 texture = ExtResource("4_wvr50")
 
-[node name="UI" type="Control" parent="." unique_id=1626737244 node_paths=PackedStringArray("ButtonsNode", "BackButton")]
+[node name="UI" type="Control" parent="." unique_id=1626737244 node_paths=PackedStringArray("ButtonsNode", "BackButton", "HistoryBox")]
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
 anchors_preset = 0
@@ -60,6 +60,7 @@ mouse_filter = 1
 script = ExtResource("4_rk2tg")
 ButtonsNode = NodePath("Main UI/HBoxContainer/Buttonbox/Buttons")
 BackButton = NodePath("Main UI/HBoxContainer/Buttonbox/BackButton")
+HistoryBox = NodePath("Main UI/HBoxContainer/Textbox/ActionHistory")
 metadata/_edit_use_anchors_ = true
 
 [node name="Main UI" type="Panel" parent="UI" unique_id=1186781270]
@@ -101,10 +102,6 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/default_color = Color(1, 1, 1, 1)
-text = "> Player attacked ____ for 10 damage
-> Enemy attacked ____ for 2 damage
-> ___ is burning for X rounds
-> Enemy healed ____ for 10 health"
 scroll_active = false
 scroll_following = true
 

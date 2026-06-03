@@ -16,10 +16,6 @@ func _ready() -> void:
 	await JRPGSignalBus.instance.StartDone
 	Turn()
 
-func _physics_process(delta: float) -> void:
-	#TODO: replace Highlight state
-	JRPGSignalBus.instance.UpdateHighlight.emit();
-
 func Turn():
 	if turn == 0:
 		turn = 1
@@ -29,10 +25,12 @@ func Turn():
 		
 		JRPGSignalBus.instance.emit_signal("PlayerTurn")
 		JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.SELECTABLE_PLAYER)
+		JRPGSignalBus.instance.ResultToUI.emit("Player turn")
 	else:
 		turn = 0
 		JRPGSignalBus.instance.emit_signal("EnemyTurn")
 		JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.NONE)
+		JRPGSignalBus.instance.ResultToUI.emit("Enemy turn")
 
 func CheckPlayerTurn():
 	var playerturn := true
@@ -44,7 +42,7 @@ func CheckPlayerTurn():
 			break;
 	
 	if playerturn:
-		JRPGSignalBus.instance.EndTurn
+		JRPGSignalBus.instance.EndTurn.emit()
 
 func SelectTarget(MouseTarget: JRPGBaseBattleChar):
 	if turn != 1 || MouseTarget == null:
@@ -57,8 +55,9 @@ func SelectTarget(MouseTarget: JRPGBaseBattleChar):
 		TargetEnemy = false
 		SelectedCharacter.AvailableAction = false;
 		await SelectedSkill.Activate(SelectedCharacter, [MouseTarget])
-		JRPGSignalBus.instance.SetSelectedChar.emit(null)
+		JRPGSignalBus.instance.SelectedChar.emit(null)
 		JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.SELECTABLE_PLAYER)
+		SelectedCharacter = null
 		CheckPlayerTurn()
 	elif MouseTarget.Team == JRPGEnums.Team.Player && SelectedCharacter == null && MouseTarget.AvailableAction:
 		SelectedCharacter = MouseTarget

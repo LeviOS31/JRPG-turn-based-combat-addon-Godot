@@ -2,6 +2,7 @@ extends Control
 
 @export var ButtonsNode: Control
 @export var BackButton: Button
+@export var HistoryBox: RichTextLabel
 var buttons: Array
 var selectingskill := false
 
@@ -10,6 +11,7 @@ var selectedcharskills: Array
 
 func _ready() -> void:
 	JRPGSignalBus.instance.SelectedChar.connect(GetSelectedChar)
+	JRPGSignalBus.instance.ResultToUI.connect(addToHistory)
 	
 	await get_tree().create_timer(1000).timeout
 	
@@ -24,6 +26,12 @@ func _physics_process(delta: float) -> void:
 	
 
 func GetSelectedChar(Char: JRPGBaseBattleChar):
+	if(Char == null):
+		Back()
+		selectedcharskills = []
+		buttons[0].disabled = true
+		buttons[-1].disabled = true
+		return
 	selectedcharskills = Char.Char.equipped_skills
 
 func ClickSkillsButton():
@@ -70,3 +78,6 @@ func get_all_children_of_type(current_node: Node, type, result: Array) -> void:	
 func disconnectbutton(button: Button):
 	for connection in button.pressed.get_connections():
 		button.pressed.disconnect(connection.callable)
+
+func addToHistory(text: String):
+	HistoryBox.text += "> " + text + "\n"

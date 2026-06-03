@@ -1,15 +1,18 @@
 extends Node2D
 class_name JRPGBaseBattleChar
 
-var Animator : AnimationPlayer
-var Char : JRPGCharInstance
-var StatusEffects : Dictionary[JRPGBaseEffect,int]
-var Team : JRPGEnums.Team
+var Animator: AnimationPlayer
+var AIControl: JRPGAIController
+var Char: JRPGCharInstance
+var StatusEffects: Dictionary[JRPGBaseEffect,int]
+var Team: JRPGEnums.Team
+
 
 var AvailableAction := false
 
 func _ready() -> void:
 	Animator = $Animationplayer
+	AIControl = $AIControl
 
 func playstart(pos : Vector2):
 	var tween = get_tree().create_tween()
@@ -26,11 +29,16 @@ func playstart(pos : Vector2):
 	Animator.play("Idle")
 	JRPGSignalBus.instance.StartDone.emit()
 
+func AITurn(Context: JRPGContext):
+	AIControl.ChooseAction(self, Context);
+
 func ApplyDamage(Amount: int, DamageType: JRPGEnums.DamageType, Element: JRPGEnums.Elements, Caster: JRPGBaseBattleChar):
 	if DamageType == JRPGEnums.DamageType.Damage:
 		Char.current_hp -= Amount;
+		JRPGSignalBus.instance.ResultToUI.emit(Caster.Char.species.Name + " attacked " + Char.species.Name + " for " + str(Amount) + " damage")
 	elif DamageType == JRPGEnums.DamageType.Health:
 		Char.current_hp = clampi(Char.current_hp + Amount, Char.current_hp, Char.max_hp)
+		JRPGSignalBus.instance.ResultToUI.emit(Caster.Char.species.Name + " Healed " + Char.species.Name + " for " + str(Amount) + " health")
 
 func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseBattleChar, hovered: JRPGBaseBattleChar) -> void:
 	match state:
@@ -68,7 +76,6 @@ func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseB
 					HighLight(true, Color(0.0, 0.512, 0.0, 1.0))
 			else:
 				HighLight(false, Color(0.781, 0.781, 0.781, 1.0))
-
 
 func _on_select_area_mouse_entered() -> void:
 	JRPGSignalBus.instance.MouseOver.emit(self)
