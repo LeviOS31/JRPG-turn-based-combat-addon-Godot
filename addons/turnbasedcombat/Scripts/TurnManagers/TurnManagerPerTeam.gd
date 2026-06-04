@@ -114,3 +114,4 @@ func CallEnemies():
 		Char.AITurn(context)
 		await JRPGSignalBus.instance.DidAction;
 	
+	JRPGSignalBus.instance.EndTurn.emit()

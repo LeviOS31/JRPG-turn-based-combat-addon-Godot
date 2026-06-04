@@ -5,6 +5,8 @@
 [ext_resource type="Script" uid="uid://i5f8emg47xx7" path="res://addons/turnbasedcombat/Scripts/Character/BaseBattleChar.gd" id="3_fa118"]
 [ext_resource type="Script" uid="uid://dctubrhlbinh6" path="res://addons/turnbasedcombat/Scripts/Character/CharAnimatorScript.gd" id="4_h8fgl"]
 [ext_resource type="Script" uid="uid://c6a5ey5qijrko" path="res://addons/turnbasedcombat/Scripts/EnemyAI/AIController.gd" id="5_fa118"]
+[ext_resource type="Script" uid="uid://djyovaxm781wh" path="res://addons/turnbasedcombat/Scripts/EnemyAI/AIStrategy.gd" id="6_xeye1"]
+[ext_resource type="Resource" uid="uid://d2cx5j2n2s0n8" path="res://addons/turnbasedcombat/Scripts/EnemyAI/PremadeStrategies/created/StrategyMan.tres" id="7_6r8fy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jaieb"]
 resource_local_to_scene = true
@@ -178,6 +180,7 @@ shape = SubResource("RectangleShape2D_5rscq")
 
 [node name="AIControl" type="Node" parent="." unique_id=1688354754]
 script = ExtResource("5_fa118")
+strategies = Array[ExtResource("6_xeye1")]([ExtResource("7_6r8fy")])
 
 [connection signal="input_event" from="SelectArea" to="." method="_on_select_area_input_event"]
 [connection signal="mouse_entered" from="SelectArea" to="." method="_on_select_area_mouse_entered"]

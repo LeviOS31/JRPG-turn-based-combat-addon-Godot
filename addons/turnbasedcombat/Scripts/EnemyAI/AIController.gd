@@ -14,7 +14,7 @@ func ChooseAction(ai_character: JRPGBaseBattleChar, combat_context: JRPGContext)
 	var best_target: Array[JRPGBaseBattleChar] = []
 	var highest_score: float = -1.0
 	
-	for skill in ai_character.skills:
+	for skill in ai_character.Char.equipped_skills:
 		for strategy in strategies:
 			var evaluation = strategy.evaluate_skill(skill, ai_character, combat_context)
 			
@@ -23,20 +23,19 @@ func ChooseAction(ai_character: JRPGBaseBattleChar, combat_context: JRPGContext)
 			if JRPGCombatManager.RandomizeAttacks:
 				evaluation.Score = RandomizeScore(evaluation.Score)
 			
-			if evaluation.score > highest_score:
-				highest_score = evaluation.score
+			if evaluation.Score > highest_score:
+				highest_score = evaluation.Score
 				best_skill = skill
-				best_target = [evaluation.target]
+				best_target = [evaluation.Target]
 				
 	if best_skill.Target == JRPGEnums.Target.All_Enemies:
 		best_target = combat_context.Enemies
 	elif best_skill.Target == JRPGEnums.Target.All_Allies:
 		best_target = combat_context.Allies
 	
-	
-	
-	best_skill.Activate(ai_character, best_target)
+	await best_skill.Activate(ai_character, best_target)
 	SkillHistory[best_skill.Name] = 0
+	JRPGSignalBus.instance.DidAction.emit()
 
 func RandomizeScore(Score: int) -> int:
 	randomize()

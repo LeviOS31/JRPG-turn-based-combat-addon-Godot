@@ -21,7 +21,7 @@ class_name JRPGBaseEffect
 ## Which stat gets affected (e.g., HP, MP, ATK, DEF)
 @export var statTarget : JRPGEnums.StatTarget = JRPGEnums.StatTarget.Health
 ## Is the amount a flat value (+10) or a percentage (+10%)?
-@export var CalculationType : JRPGEnums.CalcType = JRPGEnums.CalcType.flat
+@export var CalculationType : JRPGEnums.CalcType = JRPGEnums.CalcType.Flat
 ## How much the stat is affected. (Positive for buffs/healing, negative for debuffs/damage)
 @export var Amount : int = 1
 

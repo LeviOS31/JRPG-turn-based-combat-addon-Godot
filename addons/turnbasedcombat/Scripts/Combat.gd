@@ -63,13 +63,13 @@ func LoadChars() -> Array[JRPGBaseBattleChar]:
 		TurnManagerinstance.PlayerTeam.append(instance)
 	
 	for i:int in EnemyTeam.size():
-		var instance : JRPGBaseBattleChar = load(CharactersPath + PlayerTeam[i].species.Name + "/Battle.tscn").instantiate()
+		var instance : JRPGBaseBattleChar = load(CharactersPath + EnemyTeam[i].species.Name + "/Battle.tscn").instantiate()
 		instance.add_to_group("BattleChar")
 		instance.Team = JRPGEnums.Team.Enemy
 		characters.push_back(instance)
 		EnemyTeamNode.add_child(instance)
 		instance.global_position = EnemyTeamNode.get_child(i).global_position + Vector2(450,0)
-		instance.Char = PlayerTeam[i]
+		instance.Char = EnemyTeam[i]
 		
 		TurnManagerinstance.EnemyTeam.append(instance)
 	

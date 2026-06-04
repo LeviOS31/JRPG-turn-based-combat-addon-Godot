@@ -4,7 +4,7 @@ class_name JRPGDefaultAggressionStrategy
 @export_range(0.0, 1.0)  var GroupAttackThreshold:= 0.1
 
 func evaluate_skill(Skill: JRPGBaseSkill, Self: JRPGBaseBattleChar, Context: JRPGContext) -> JRPGStrategyResult:
-	if Skill.is_healing:
+	if Skill.DamageType != JRPGEnums.DamageType.Damage:
 		return JRPGStrategyResult.new(Skill, null, 0)
 		
 	if Context.Enemies.is_empty():
@@ -18,7 +18,7 @@ func evaluate_skill(Skill: JRPGBaseSkill, Self: JRPGBaseBattleChar, Context: JRP
 	if Skill.Target == JRPGEnums.Target.Enemy:
 		var Target = Context.Enemies[0] 
 		for Enemy in Context.Enemies:
-			if Enemy.current_hp < Target.current_hp:
+			if Enemy.Char.current_hp < Target.Char.current_hp:
 				Target = Enemy
 			
 		var Score = float(Skill.BaseDamage) * 1.5 
