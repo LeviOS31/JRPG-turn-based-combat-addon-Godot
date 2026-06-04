@@ -12,7 +12,7 @@ class_name JRPGBaseSkill
 ## Defines who can be targeted by this skill (e.g., Single Enemy, All Allies, Self).
 @export var Target: JRPGEnums.Target
 ## What resource type this skill consumes.
-@export var CostType: JRPGEnums.CostType = JRPGEnums.CostType.Magik
+@export var CostType: JRPGEnums.CostType = JRPGEnums.CostType.Magi
 ## How much of the CostType resource is consumed. 0 = no cost.
 @export var Cost: int = 0
 

@@ -2,6 +2,8 @@ class_name JRPGEnums
 
 enum DamageType{
 	Damage,
+	NegativeStat,
+	PositiveStat,
 	Health,
 }
 
@@ -44,7 +46,7 @@ enum Elements{
 
 enum StatTarget{
 	Health,
-	Magic,
+	Magi,
 	Hit_Chance,
 	Defense,
 	Speed,
@@ -62,13 +64,13 @@ enum EffectType{
 }
 
 enum CalcType{
-	flat,
-	percentage
+	Flat,
+	Percentage
 }
 
 enum  CostType{
 	Health,
-	Magik,
+	Magi,
 }
 
 enum EffectDuration{

@@ -6,6 +6,7 @@ signal StartTurn; #AddCharacterRef for effects
 signal EndTurn; #AddCharacterRef for effects
 signal PlayerTurn;
 signal EnemyTurn;
+signal DidAction;
 signal EndBattle;
 
 signal SelectedSkill(Skill: JRPGBaseSkill)

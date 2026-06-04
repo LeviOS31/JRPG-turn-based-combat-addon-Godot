@@ -1,4 +1,5 @@
 extends Node2D
+class_name JRPGCombatManager
 
 enum TurnManagerStyle {
 	## per turn the player can choose all of the characters to do something once
@@ -19,11 +20,17 @@ enum TurnManagerStyle {
 @export var EnemyTeamNode: Node2D
 ## Filepath where all you character for the turn based combat are. they need to be structured like: res://[yourfolders]/[example]Battlechars/[speciesname]/Battle.tscn the structure is important otherwise this won't be able to find the characters. To see an example look at the template scene
 @export var CharactersPath: String
+## if true adds a little randomization to the choice of attacks the enemies do
+static var RandomizeAttacks: bool = false
+## if true tries to prevent enemy from spamming a single attack over and over
+static var SpamPenalty: bool = false
+
 ## array of character for the players team [color=green][b]3 max[/b][/color]
 var PlayerTeam: Array[JRPGCharInstance]
 ## array of character for the enemy team [color=green][b]3 max[/b][/color]
 var EnemyTeam: Array[JRPGCharInstance]
 var TurnManagerinstance: JRPGTurnManager
+
 
 func start():
 	match turnmanagerstyle:

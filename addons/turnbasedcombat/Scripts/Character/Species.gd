@@ -6,6 +6,7 @@ class_name JRPGSpecies
 @export var Max_Base_Magi : int
 @export var HP_Growth : int
 @export var Magi_Growth : int
+@export var Magi_Regen: int
 @export var Weakness : JRPGEnums.Elements
 @export var Strength : JRPGEnums.Elements
 @export var Base_Skills : Array[JRPGBaseSkill] # Skills every instance starts with

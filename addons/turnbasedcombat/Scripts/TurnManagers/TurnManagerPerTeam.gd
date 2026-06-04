@@ -1,6 +1,5 @@
 extends JRPGTurnManager
 
-
 var turn := 0;
 
 var TargetAlly: bool
@@ -9,6 +8,7 @@ var SelectedSkill: JRPGBaseSkill
 
 func _ready() -> void:
 	JRPGSignalBus.instance.PlayerTurn.connect(CheckPlayerTurn)
+	JRPGSignalBus.instance.EnemyTurn.connect(CallEnemies)
 	JRPGSignalBus.instance.EndTurn.connect(Turn)
 	JRPGSignalBus.instance.Clicked.connect(SelectTarget)
 	JRPGSignalBus.instance.SelectedSkill.connect(PrepareSkillTargeting)
@@ -104,3 +104,13 @@ func PrepareSkillTargeting(Skill: JRPGBaseSkill):
 			JRPGSignalBus.instance.SetSelectedChar.emit(null)
 			JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.NONE)
 			push_error("Unhandled target: %s" % SelectedSkill.Target)
+
+func CallEnemies():
+	for Char: JRPGBaseBattleChar in EnemyTeam:
+		var context := JRPGContext.new()
+		context.Allies = EnemyTeam
+		context.Enemies = PlayerTeam
+		
+		Char.AITurn(context)
+		await JRPGSignalBus.instance.DidAction;
+	

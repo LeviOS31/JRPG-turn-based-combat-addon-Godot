@@ -7,7 +7,6 @@ var Char: JRPGCharInstance
 var StatusEffects: Dictionary[JRPGBaseEffect,int]
 var Team: JRPGEnums.Team
 
-
 var AvailableAction := false
 
 func _ready() -> void:
