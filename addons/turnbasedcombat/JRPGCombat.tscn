@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cyqa6p6j7ne7w"]
 
-[ext_resource type="Script" uid="uid://bg3b8s6eachcv" path="res://addons/turnbasedcombat/Scripts/Combat.gd" id="1_vvyul"]
-[ext_resource type="Script" uid="uid://b1bphcew07teq" path="res://addons/turnbasedcombat/Scripts/Abstracts/JRPGSignalBus.gd" id="2_tppsp"]
-[ext_resource type="Script" uid="uid://1a0ux03uad35" path="res://addons/turnbasedcombat/Scripts/Abstracts/HighlightManager.gd" id="3_lnhn1"]
-[ext_resource type="Script" uid="uid://bd0t0qvyl3pa7" path="res://addons/turnbasedcombat/Scripts/MainUI.gd" id="4_rk2tg"]
-[ext_resource type="Texture2D" uid="uid://5av482ey5eyy" path="res://addons/turnbasedcombat/assets/TempBackground.png" id="4_wvr50"]
+[ext_resource type="Script" uid="uid://bg3b8s6eachcv" path="res://addons/turnbasedcombat/Scripts/Combat.gd" id="1_m8x75"]
+[ext_resource type="Script" uid="uid://b1bphcew07teq" path="res://addons/turnbasedcombat/Scripts/Abstracts/JRPGSignalBus.gd" id="2_lsmea"]
+[ext_resource type="Script" uid="uid://1a0ux03uad35" path="res://addons/turnbasedcombat/Scripts/Abstracts/HighlightManager.gd" id="3_5ekhk"]
+[ext_resource type="Texture2D" uid="uid://5av482ey5eyy" path="res://addons/turnbasedcombat/assets/TempBackground.png" id="4_k68cb"]
+[ext_resource type="Script" uid="uid://bd0t0qvyl3pa7" path="res://addons/turnbasedcombat/Scripts/MainUI.gd" id="5_tgbn1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wvr50"]
 content_margin_left = 0.0
@@ -27,16 +27,16 @@ bg_color = Color(0.07284262, 0.072842635, 0.072842576, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6nfr"]
 bg_color = Color(0.12591085, 0.12591085, 0.12591082, 1)
 
-[node name="Combat" type="Node2D" unique_id=320433929 node_paths=PackedStringArray("PlayerTeamNode", "EnemyTeamNode")]
-script = ExtResource("1_vvyul")
+[node name="JRPGCombat" type="Node2D" unique_id=320433929 node_paths=PackedStringArray("PlayerTeamNode", "EnemyTeamNode")]
+script = ExtResource("1_m8x75")
 PlayerTeamNode = NodePath("Characters/Player")
 EnemyTeamNode = NodePath("Characters/Enemy")
 
 [node name="JRPGSignalBus" type="Node" parent="." unique_id=778933315]
-script = ExtResource("2_tppsp")
+script = ExtResource("2_lsmea")
 
 [node name="HighlightManager" type="Node" parent="." unique_id=404079307]
-script = ExtResource("3_lnhn1")
+script = ExtResource("3_5ekhk")
 
 [node name="Background" type="Control" parent="." unique_id=861365545]
 layout_mode = 3
@@ -48,7 +48,7 @@ offset_bottom = 40.0
 layout_mode = 0
 offset_right = 1154.0
 offset_bottom = 649.0
-texture = ExtResource("4_wvr50")
+texture = ExtResource("4_k68cb")
 
 [node name="UI" type="Control" parent="." unique_id=1626737244 node_paths=PackedStringArray("ButtonsNode", "BackButton", "HistoryBox")]
 custom_minimum_size = Vector2(1152, 648)
@@ -57,7 +57,7 @@ anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 mouse_filter = 1
-script = ExtResource("4_rk2tg")
+script = ExtResource("5_tgbn1")
 ButtonsNode = NodePath("Main UI/HBoxContainer/Buttonbox/Buttons")
 BackButton = NodePath("Main UI/HBoxContainer/Buttonbox/BackButton")
 HistoryBox = NodePath("Main UI/HBoxContainer/Textbox/ActionHistory")
