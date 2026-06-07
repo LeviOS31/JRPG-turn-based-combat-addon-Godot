@@ -21,3 +21,5 @@ A modulat JRPG combat addon for Godot 4.6 that is meant to be a plug and play so
 - Easily replacable UI?[^1]
 - enemy replacements with wave system option? [^1]
 [^1]: these functions might not make it to the final addon
+
+[Getting started](../wiki)
