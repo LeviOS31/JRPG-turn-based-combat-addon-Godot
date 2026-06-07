@@ -22,4 +22,5 @@ A modulat JRPG combat addon for Godot 4.6 that is meant to be a plug and play so
 - enemy replacements with wave system option? [^1]
 [^1]: these functions might not make it to the final addon
 
-[Getting started](https://github.com/LeviOS31/JRPG-turn-based-combat-addon-Godot/wiki)
+### Getting started
+Go to the Wiki for the installation and starting guide
