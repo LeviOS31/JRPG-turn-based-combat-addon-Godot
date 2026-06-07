@@ -3,7 +3,7 @@ extends EditorPlugin
 
 func _enter_tree() -> void:
 	# Load your combat scene
-	var combat_scene = preload("res://addons/turnbasedcombat/Combat.tscn")
+	var combat_scene = preload("res://addons/turnbasedcombat/JRPGCombat.tscn")
 	var combat_script = preload("res://addons/turnbasedcombat/Scripts/Combat.gd")
 	
 	# Register it as a custom node type. 
