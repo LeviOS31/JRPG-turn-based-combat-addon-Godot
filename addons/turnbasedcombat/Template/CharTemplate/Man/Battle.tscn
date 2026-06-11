@@ -160,7 +160,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5rscq"]
-size = Vector2(12, 26)
+size = Vector2(11, 25)
 
 [node name="BattlecharTemplate" type="Sprite2D" unique_id=462627241]
 material = SubResource("ShaderMaterial_jaieb")
@@ -175,7 +175,7 @@ script = ExtResource("4_h8fgl")
 [node name="SelectArea" type="Area2D" parent="." unique_id=752270552]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SelectArea" unique_id=2106582835]
-position = Vector2(-2, 3)
+position = Vector2(-1.5, 2.5)
 shape = SubResource("RectangleShape2D_5rscq")
 
 [node name="AIControl" type="Node" parent="." unique_id=1688354754]

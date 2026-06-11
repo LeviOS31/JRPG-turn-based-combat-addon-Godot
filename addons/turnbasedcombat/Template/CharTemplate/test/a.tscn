@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cuh07ou3bogc3"]
+
+[ext_resource type="Script" uid="uid://i5f8emg47xx7" path="res://addons/turnbasedcombat/Scripts/Character/BaseBattleChar.gd" id="1_n17oh"]
+
+[node name="A" type="Sprite2D" unique_id=300962222]
+script = ExtResource("1_n17oh")
+
+[node name="Node" type="Node" parent="." unique_id=1519938928]
+
+[node name="SelectArea" type="Area2D" parent="." unique_id=1159367206]
