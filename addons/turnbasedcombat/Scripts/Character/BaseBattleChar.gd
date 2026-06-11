@@ -40,7 +40,7 @@ func AITurn(Context: JRPGContext):
 
 func ApplySkill(Amount: int, DamageType: JRPGEnums.DamageType, Element: JRPGEnums.Elements, Caster: JRPGBaseBattleChar):
 	if DamageType == JRPGEnums.DamageType.Damage:
-		Char.current_hp -= Amount;
+		Char.current_hp -= Amount * Defense;
 		JRPGSignalBus.instance.ResultToUI.emit(Caster.Char.species.Name + " attacked " + Char.species.Name + " for " + str(Amount) + " damage")
 		
 	elif DamageType == JRPGEnums.DamageType.Health:
@@ -60,7 +60,21 @@ func ApplyEffect(Char: JRPGBaseBattleChar, Team: JRPGEnums.Team, StartofTurn: bo
 	for item: JRPGBaseEffect in remove:
 		item.remove(self);
 		StatusEffects.erase(item)
-	
+
+func TakeDamage(Amount: int, Effect: JRPGBaseEffect = null):
+	Char.current_hp -= Amount;
+	if Effect:
+		JRPGSignalBus.instance.ResultToUI.emit(Effect.Name + " Damaged " + Char.species.Name + " for " + str(Amount) + " health")
+
+func Heal(Amount: int, Effect: JRPGBaseEffect = null):
+	Char.current_hp = clampi(Char.current_hp + Amount, Char.current_hp, Char.max_hp)
+	if Effect:
+		JRPGSignalBus.instance.ResultToUI.emit(Effect.Name + " Healed " + Char.species.Name + " for " + str(Amount) + " health")
+
+func DrainMagi(Amount: int, Effect: JRPGBaseEffect = null):
+	Char.current_magi -= Amount;
+	if Effect:
+		JRPGSignalBus.instance.ResultToUI.emit(Effect.Name + " drained " + str(Amount) + " magi from " + Char.species.Name)
 
 func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseBattleChar, hovered: JRPGBaseBattleChar) -> void:
 	match state:

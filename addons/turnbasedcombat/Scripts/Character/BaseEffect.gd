@@ -60,9 +60,12 @@ func Apply(Target: JRPGBaseBattleChar):
 	
 	match statTarget:
 		JRPGEnums.StatTarget.Health:
-			pass
+			if Amount < 0:
+				Target.TakeDamage(Amount, self)
+			elif Amount > 0:
+				Target.Heal(Amount, self)
 		JRPGEnums.StatTarget.Magi:
-			pass
+			Target.DrainMagi(Amount, self)
 		JRPGEnums.StatTarget.Hit_Chance:
 			pass
 		JRPGEnums.StatTarget.Defense:
