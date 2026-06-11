@@ -1,5 +1,8 @@
 extends Node2D
 class_name JRPGEffectVisBase
 
-func Vizualize():
-	$AnimationPlayer.play("Vizualize")
+func Visualize():
+	$AnimationPlayer.play("Visualize")
+	
+	await $AnimationPlayer.animation_finished
+	queue_free()

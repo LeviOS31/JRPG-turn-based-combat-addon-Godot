@@ -48,12 +48,12 @@ func Attach(Caster: JRPGBaseBattleChar, Target: JRPGBaseBattleChar):
 
 func Apply(Target: JRPGBaseBattleChar):
 	print("Apply effect to " + Target.Char.species.Name)
-	JRPGSignalBus.instance.ResultToUI.emit(Target.Char.species.Name + "is still affected by " + Name)
+	JRPGSignalBus.instance.ResultToUI.emit(Target.Char.species.Name + " is affected by " + Name)
 	
 	if EffectVis != null:
 		var effectvisinstance = EffectVis.instantiate()
 		Target.add_child(effectvisinstance)
-		effectvisinstance.visualize()
+		effectvisinstance.Visualize()
 		
 	if EffectType == JRPGEnums.EffectType.Modify:
 		return
@@ -65,16 +65,33 @@ func Apply(Target: JRPGBaseBattleChar):
 			elif Amount > 0:
 				Target.Heal(Amount, self)
 		JRPGEnums.StatTarget.Magi:
-			Target.DrainMagi(Amount, self)
+			if Amount < 0:
+				Target.DrainMagi(Amount, self)
+			elif Amount > 0:
+				Target.FillMagi(Amount, self)
 		JRPGEnums.StatTarget.Hit_Chance:
-			pass
+			push_error("Not implemented yet!")
 		JRPGEnums.StatTarget.Defense:
-			pass
+			push_error("Not implemented yet!")
 		JRPGEnums.StatTarget.Speed:
-			pass
+			push_error("Not implemented yet!")
 		JRPGEnums.StatTarget.Strength:
-			pass
+			push_error("Not implemented yet!")
 
 func Remove(Target: JRPGBaseBattleChar):
 	if EffectType != JRPGEnums.EffectType.Modify:
 		return;
+	
+	match statTarget:
+		JRPGEnums.StatTarget.Health:
+			push_error("Not implemented yet!")
+		JRPGEnums.StatTarget.Magi:
+			push_error("Not implemented yet!")
+		JRPGEnums.StatTarget.Hit_Chance:
+			Target.HitChance = Target.HitChance - Amount
+		JRPGEnums.StatTarget.Defense:
+			Target.Defense = Target.Defense - Amount
+		JRPGEnums.StatTarget.Speed:
+			Target.Speed = Target.Speed - Amount
+		JRPGEnums.StatTarget.Strength:
+			Target.Strength = Target.Strength - Amount

@@ -9,7 +9,7 @@ var SelectedSkill: JRPGBaseSkill
 func _ready() -> void:
 	JRPGSignalBus.instance.PlayerTurn.connect(CheckPlayerTurn)
 	JRPGSignalBus.instance.EnemyTurn.connect(CallEnemies)
-	JRPGSignalBus.instance.EndTurn.connect(func(char,team): Turn)
+	JRPGSignalBus.instance.EndTurn.connect(func(char,team): Turn())
 	JRPGSignalBus.instance.Clicked.connect(SelectTarget)
 	JRPGSignalBus.instance.SelectedSkill.connect(PrepareSkillTargeting)
 	

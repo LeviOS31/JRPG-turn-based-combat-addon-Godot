@@ -40,13 +40,13 @@ func start():
 			add_child(TurnManagerinstance)
 			SetupPerTeam()
 		TurnManagerStyle.OrderTeam:
-			pass
+			push_error("Not implemented yet!")
 		TurnManagerStyle.OrderAternating:
-			pass
+			push_error("Not implemented yet!")
 		TurnManagerStyle.OrderStat:
-			pass
+			push_error("Not implemented yet!")
 		TurnManagerStyle.LooseOrderStat:
-			pass
+			push_error("Not implemented yet!")
 
 func LoadChars() -> Array[JRPGBaseBattleChar]: 
 	var characters: Array[JRPGBaseBattleChar] 

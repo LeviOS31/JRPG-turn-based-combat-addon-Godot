@@ -76,6 +76,11 @@ func DrainMagi(Amount: int, Effect: JRPGBaseEffect = null):
 	if Effect:
 		JRPGSignalBus.instance.ResultToUI.emit(Effect.Name + " drained " + str(Amount) + " magi from " + Char.species.Name)
 
+func FillMagi(Amount: int, Effect: JRPGBaseEffect = null):
+	Char.current_magi = clampi(Char.current_magi + Amount, Char.current_magi, Char.max_magi)
+	if Effect:
+		JRPGSignalBus.instance.ResultToUI.emit(Effect.Name + " filled " + Char.species.Name + "'s magi for " + str(Amount))
+
 func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseBattleChar, hovered: JRPGBaseBattleChar) -> void:
 	match state:
 		JRPGEnums.HighlightState.SELECTABLE_PLAYER:
