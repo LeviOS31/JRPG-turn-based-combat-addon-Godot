@@ -9,7 +9,7 @@ var SelectedSkill: JRPGBaseSkill
 func _ready() -> void:
 	JRPGSignalBus.instance.PlayerTurn.connect(CheckPlayerTurn)
 	JRPGSignalBus.instance.EnemyTurn.connect(CallEnemies)
-	JRPGSignalBus.instance.EndTurn.connect(Turn)
+	JRPGSignalBus.instance.EndTurn.connect(func(char,team): Turn)
 	JRPGSignalBus.instance.Clicked.connect(SelectTarget)
 	JRPGSignalBus.instance.SelectedSkill.connect(PrepareSkillTargeting)
 	
@@ -23,14 +23,16 @@ func Turn():
 		for i:int in PlayerTeam.size():
 			PlayerTeam[i].AvailableAction = true
 		
-		JRPGSignalBus.instance.emit_signal("PlayerTurn")
+		JRPGSignalBus.instance.PlayerTurn.emit()
 		JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.SELECTABLE_PLAYER)
 		JRPGSignalBus.instance.ResultToUI.emit("Player turn")
+		JRPGSignalBus.instance.StartTurn.emit(null, JRPGEnums.Team.Player)
 	else:
 		turn = 0
-		JRPGSignalBus.instance.emit_signal("EnemyTurn")
+		JRPGSignalBus.instance.EnemyTurn.emit()
 		JRPGSignalBus.instance.SetHighlightState.emit(JRPGEnums.HighlightState.NONE)
 		JRPGSignalBus.instance.ResultToUI.emit("Enemy turn")
+		JRPGSignalBus.instance.StartTurn.emit(null, JRPGEnums.Team.Enemy)
 
 func CheckPlayerTurn():
 	var playerturn := true
@@ -42,7 +44,7 @@ func CheckPlayerTurn():
 			break;
 	
 	if playerturn:
-		JRPGSignalBus.instance.EndTurn.emit()
+		JRPGSignalBus.instance.EndTurn.emit(null, JRPGEnums.Team.Player)
 
 func SelectTarget(MouseTarget: JRPGBaseBattleChar):
 	if turn != 1 || MouseTarget == null:
@@ -114,4 +116,4 @@ func CallEnemies():
 		Char.AITurn(context)
 		await JRPGSignalBus.instance.DidAction;
 	
-	JRPGSignalBus.instance.EndTurn.emit()
+	JRPGSignalBus.instance.EndTurn.emit(null, JRPGEnums.Team.Enemy)

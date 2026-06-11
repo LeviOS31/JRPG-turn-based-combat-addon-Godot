@@ -14,6 +14,8 @@ class_name JRPGBaseEffect
 @export var Duration : int = 3
 ## Dictates what happens when a effect that is already effecting a target gets cast on the target again
 @export var DurationType: JRPGEnums.EffectDuration
+## Dictates if the effect gets triggerd at the start or end of a characters turn
+@export var isStartOfTurn: bool = true
 
 @export_group("Mechanics")
 ## Does this modify a stat for the duration, or tick damage/healing every turn?
@@ -25,7 +27,7 @@ class_name JRPGBaseEffect
 ## How much the stat is affected. (Positive for buffs/healing, negative for debuffs/damage)
 @export var Amount : int = 1
 
-func Attach(caster: JRPGBaseBattleChar, target: JRPGBaseBattleChar):
+func Attach(Caster: JRPGBaseBattleChar, Target: JRPGBaseBattleChar):
 	if !EffectVis:
 		push_warning("Error: No effect visual specified for: " + Name)
 	
@@ -35,15 +37,41 @@ func Attach(caster: JRPGBaseBattleChar, target: JRPGBaseBattleChar):
 		if !randi_range(0, 99) < HitChance:
 			return
 	
-	if target.StatusEffects.has(self):
+	if Target.StatusEffects.has(self):
 		match DurationType:
 			JRPGEnums.EffectDuration.Add:
-				target.StatusEffects[self] = target.StatusEffects[self] + Duration 
+				Target.StatusEffects[self] = Target.StatusEffects[self] + Duration 
 			JRPGEnums.EffectDuration.Refresh:
-				target.StatusEffects[self] = Duration
+				Target.StatusEffects[self] = Duration
 	else:
-		target.StatusEffects[self] = Duration
+		Target.StatusEffects[self] = Duration
 
-func Apply(target: JRPGBaseBattleChar):
-	print("Apply effect to " + target.Char.species.Name)
-	pass
+func Apply(Target: JRPGBaseBattleChar):
+	print("Apply effect to " + Target.Char.species.Name)
+	JRPGSignalBus.instance.ResultToUI.emit(Target.Char.species.Name + "is still affected by " + Name)
+	
+	if EffectVis != null:
+		var effectvisinstance = EffectVis.instantiate()
+		Target.add_child(effectvisinstance)
+		effectvisinstance.visualize()
+		
+	if EffectType == JRPGEnums.EffectType.Modify:
+		return
+	
+	match statTarget:
+		JRPGEnums.StatTarget.Health:
+			pass
+		JRPGEnums.StatTarget.Magi:
+			pass
+		JRPGEnums.StatTarget.Hit_Chance:
+			pass
+		JRPGEnums.StatTarget.Defense:
+			pass
+		JRPGEnums.StatTarget.Speed:
+			pass
+		JRPGEnums.StatTarget.Strength:
+			pass
+
+func Remove(Target: JRPGBaseBattleChar):
+	if EffectType != JRPGEnums.EffectType.Modify:
+		return;

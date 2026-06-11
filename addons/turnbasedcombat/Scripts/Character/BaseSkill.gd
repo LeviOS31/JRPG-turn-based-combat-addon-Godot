@@ -59,6 +59,7 @@ func Activate(Caster: JRPGBaseBattleChar, Targets: Array[JRPGBaseBattleChar]):
 		if target == null:
 			continue
 		
+		randomize()
 		if HitChance < 100:
 			if !randi_range(0, 99) < HitChance:
 				JRPGSignalBus.instance.ResultToUI.emit(Name + " missed " + target.Char.species.Name)
@@ -66,7 +67,7 @@ func Activate(Caster: JRPGBaseBattleChar, Targets: Array[JRPGBaseBattleChar]):
 		
 		var FinalDamage := BaseDamage
 		
-		target.ApplyDamage(FinalDamage, DamageType, Element, Caster)
+		target.ApplySkill(FinalDamage, DamageType, Element, Caster)
 		
 		if Effect:
-			Effect.tryapply()
+			Effect.Attach(Caster, target)

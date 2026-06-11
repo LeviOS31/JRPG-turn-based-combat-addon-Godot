@@ -7,11 +7,18 @@ var Char: JRPGCharInstance
 var StatusEffects: Dictionary[JRPGBaseEffect,int]
 var Team: JRPGEnums.Team
 
+var HitChance: float = 1;
+var Defense: float = 1;
+var Strength: float = 1;
+
 var AvailableAction := false
 
 func _ready() -> void:
 	Animator = $Animationplayer
 	AIControl = $AIControl
+	
+	JRPGSignalBus.instance.StartTurn.connect(ApplyEffect.bind(true))
+	JRPGSignalBus.instance.EndTurn.connect(ApplyEffect.bind(false))
 
 func playstart(pos : Vector2):
 	var tween = get_tree().create_tween()
@@ -31,13 +38,29 @@ func playstart(pos : Vector2):
 func AITurn(Context: JRPGContext):
 	AIControl.ChooseAction(self, Context);
 
-func ApplyDamage(Amount: int, DamageType: JRPGEnums.DamageType, Element: JRPGEnums.Elements, Caster: JRPGBaseBattleChar):
+func ApplySkill(Amount: int, DamageType: JRPGEnums.DamageType, Element: JRPGEnums.Elements, Caster: JRPGBaseBattleChar):
 	if DamageType == JRPGEnums.DamageType.Damage:
 		Char.current_hp -= Amount;
 		JRPGSignalBus.instance.ResultToUI.emit(Caster.Char.species.Name + " attacked " + Char.species.Name + " for " + str(Amount) + " damage")
+		
 	elif DamageType == JRPGEnums.DamageType.Health:
 		Char.current_hp = clampi(Char.current_hp + Amount, Char.current_hp, Char.max_hp)
 		JRPGSignalBus.instance.ResultToUI.emit(Caster.Char.species.Name + " Healed " + Char.species.Name + " for " + str(Amount) + " health")
+		
+func ApplyEffect(Char: JRPGBaseBattleChar, Team: JRPGEnums.Team, StartofTurn: bool):
+	var remove: Array[JRPGBaseEffect] = []
+	
+	for effect: JRPGBaseEffect in StatusEffects:
+		if effect.isStartOfTurn == StartofTurn:
+			StatusEffects[effect] -= 1
+			if StatusEffects[effect] == 0:
+				remove.append(effect)
+			else:
+				effect.Apply(self)
+	for item: JRPGBaseEffect in remove:
+		item.remove(self);
+		StatusEffects.erase(item)
+	
 
 func update_state_highlight(state: JRPGEnums.HighlightState, selected: JRPGBaseBattleChar, hovered: JRPGBaseBattleChar) -> void:
 	match state:
