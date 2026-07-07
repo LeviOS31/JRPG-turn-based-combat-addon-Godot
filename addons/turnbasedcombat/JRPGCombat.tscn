@@ -50,7 +50,7 @@ offset_right = 1154.0
 offset_bottom = 649.0
 texture = ExtResource("4_k68cb")
 
-[node name="UI" type="Control" parent="." unique_id=1626737244 node_paths=PackedStringArray("ButtonsNode", "BackButton", "HistoryBox")]
+[node name="UI" type="Control" parent="." unique_id=1626737244 node_paths=PackedStringArray("ButtonsNode", "BackButton")]
 custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
 anchors_preset = 0
@@ -60,7 +60,6 @@ mouse_filter = 1
 script = ExtResource("5_tgbn1")
 ButtonsNode = NodePath("Main UI/HBoxContainer/Buttonbox/Buttons")
 BackButton = NodePath("Main UI/HBoxContainer/Buttonbox/BackButton")
-HistoryBox = NodePath("Main UI/HBoxContainer/Textbox/ActionHistory")
 metadata/_edit_use_anchors_ = true
 
 [node name="Main UI" type="Panel" parent="UI" unique_id=1186781270]
@@ -83,27 +82,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 100
 alignment = 1
-
-[node name="Textbox" type="Panel" parent="UI/Main UI/HBoxContainer" unique_id=1739654233]
-self_modulate = Color(0.2627451, 0.2627451, 0.2627451, 1)
-custom_minimum_size = Vector2(500, 160)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_wvr50")
-
-[node name="ActionHistory" type="RichTextLabel" parent="UI/Main UI/HBoxContainer/Textbox" unique_id=1058791051]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 10.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -10.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_colors/default_color = Color(1, 1, 1, 1)
-scroll_active = false
-scroll_following = true
 
 [node name="Buttonbox" type="Panel" parent="UI/Main UI/HBoxContainer" unique_id=420442375]
 self_modulate = Color(0.26293245, 0.26293245, 0.26293245, 1)

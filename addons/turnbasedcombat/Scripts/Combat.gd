@@ -20,6 +20,8 @@ enum TurnManagerStyle {
 @export var EnemyTeamNode: Node2D
 ## Filepath where all you character for the turn based combat are. they need to be structured like: res://[yourfolders]/[example]Battlechars/[speciesname]/Battle.tscn the structure is important otherwise this won't be able to find the characters. To see an example look at the template scene
 @export var CharactersPath: String
+@export var Background: Texture2D
+@export_enum("History", "Team resources") var LeftPanel = "History"
 ## if true adds a little randomization to the choice of attacks the enemies do
 static var RandomizeAttacks: bool = false
 ## if true tries to prevent enemy from spamming a single attack over and over
@@ -33,6 +35,9 @@ var TurnManagerinstance: JRPGTurnManager
 
 
 func start():
+	if Background != null:
+		$Background/TextureRect.texture = Background;
+	
 	match turnmanagerstyle:
 		TurnManagerStyle.PerTeam:
 			var preinstance = load("res://addons/turnbasedcombat/Scripts/TurnManagers/TurnManagerPerTeam.gd")
@@ -47,6 +52,18 @@ func start():
 			push_error("Not implemented yet!")
 		TurnManagerStyle.LooseOrderStat:
 			push_error("Not implemented yet!")
+	
+	match LeftPanel:
+		"History":
+			var history = load("res://addons/turnbasedcombat/Nodes/textbox.tscn").instantiate()
+			$"UI/Main UI/HBoxContainer".add_child(history)
+			$UI.HistoryBox = history.get_child(0)
+			$"UI/Main UI/HBoxContainer".move_child(history, 0)
+		"Team resources":
+			var teamresources = load("res://addons/turnbasedcombat/Nodes/TeamHP.tscn").instantiate()
+			$"UI/Main UI/HBoxContainer".add_child(teamresources)
+			teamresources.Setup(PlayerTeam)
+			$"UI/Main UI/HBoxContainer".move_child(teamresources, 0)
 
 func LoadChars() -> Array[JRPGBaseBattleChar]: 
 	var characters: Array[JRPGBaseBattleChar] 

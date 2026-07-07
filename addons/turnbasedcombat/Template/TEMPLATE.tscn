@@ -10,5 +10,10 @@ species = ExtResource("2_787y7")
 
 [node name="Combat" parent="." unique_id=320433929 instance=ExtResource("1_uyh4h")]
 CharactersPath = "res://addons/turnbasedcombat/Template/CharTemplate/"
+LeftPanel = "Team resources"
+
+[node name="TextureRect" parent="Combat/Background" parent_id_path=PackedInt32Array(320433929, 861365545) index="0" unique_id=1827207403]
+offset_right = 1152.0
+stretch_mode = 2
 
 [editable path="Combat"]

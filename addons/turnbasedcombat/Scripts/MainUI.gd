@@ -2,7 +2,7 @@ extends Control
 
 @export var ButtonsNode: Control
 @export var BackButton: Button
-@export var HistoryBox: RichTextLabel
+var HistoryBox: RichTextLabel
 var buttons: Array
 var selectingskill := false
 
@@ -80,4 +80,5 @@ func disconnectbutton(button: Button):
 		button.pressed.disconnect(connection.callable)
 
 func addToHistory(text: String):
-	HistoryBox.text += "> " + text + "\n"
+	if HistoryBox != null: 
+		HistoryBox.text += "> " + text + "\n"
