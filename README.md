@@ -10,13 +10,13 @@ A modulat JRPG combat addon for Godot 4.6 that is meant to be a plug and play so
 - Multiple enemies and friendlies: you have the option to use more than just 1V1 battles
 - Turn Progression:
   - per team
+- per turn effect from skill (example fire that adds a burn to the enemy for X amount of turns)
 ### To-Do:
 - Turn Progression:
   - per character with strict order (choice between per team or ally1,enemy1,ally2,enemy2,ally3,enemy3,ETC)
   - per character with strict order based on stats
   - per character with loose order based on stats (this means that the stat can be influenced mid battle by skills and effect the turn order)
 - background based on location
-- per turn effect from skill (example fire that adds a burn to the enemy for X amount of turns)
 - effect based on battle start location (if you want the enviroment to effect the battle in any way)
 - Easily replacable UI?[^1]
 - enemy replacements with wave system option? [^1]
