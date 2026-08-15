@@ -39,16 +39,29 @@ script = ExtResource("2_lsmea")
 script = ExtResource("3_5ekhk")
 
 [node name="Background" type="Control" parent="." unique_id=861365545]
+custom_minimum_size = Vector2(1152, 648)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TextureRect" type="TextureRect" parent="Background" unique_id=1827207403]
-layout_mode = 0
-offset_right = 1154.0
-offset_bottom = 649.0
+custom_minimum_size = Vector2(1152, 648)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_k68cb")
+expand_mode = 1
+stretch_mode = 3
 
 [node name="UI" type="Control" parent="." unique_id=1626737244 node_paths=PackedStringArray("ButtonsNode", "BackButton")]
 custom_minimum_size = Vector2(1152, 648)
@@ -164,30 +177,30 @@ text = "X"
 [node name="Player" type="Node2D" parent="Characters" unique_id=1843793639]
 
 [node name="P1" type="Marker2D" parent="Characters/Player" unique_id=2111679803]
-position = Vector2(296, 358)
+position = Vector2(296, 348)
 gizmo_extents = 20.0
 
 [node name="P2" type="Marker2D" parent="Characters/Player" unique_id=768652608]
-position = Vector2(221, 249)
+position = Vector2(221, 239)
 gizmo_extents = 20.0
 
 [node name="P3" type="Marker2D" parent="Characters/Player" unique_id=382518166]
-position = Vector2(179, 436)
+position = Vector2(179, 426)
 gizmo_extents = 20.0
 
 [node name="Enemy" type="Node2D" parent="Characters" unique_id=1315091793]
 position = Vector2(1152, 0)
 
 [node name="E1" type="Marker2D" parent="Characters/Enemy" unique_id=1663858878]
-position = Vector2(-343, 352)
+position = Vector2(-343, 342)
 gizmo_extents = 20.0
 
 [node name="E2" type="Marker2D" parent="Characters/Enemy" unique_id=788095415]
-position = Vector2(-248, 252)
+position = Vector2(-248, 242)
 gizmo_extents = 20.0
 
 [node name="E3" type="Marker2D" parent="Characters/Enemy" unique_id=669835462]
-position = Vector2(-200, 436)
+position = Vector2(-200, 426)
 gizmo_extents = 20.0
 
 [connection signal="pressed" from="UI/Main UI/HBoxContainer/Buttonbox/Buttons/VBoxContainer/Button1" to="UI" method="ClickSkillsButton"]

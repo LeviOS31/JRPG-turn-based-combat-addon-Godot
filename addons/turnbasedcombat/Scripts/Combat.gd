@@ -20,8 +20,15 @@ enum TurnManagerStyle {
 @export var EnemyTeamNode: Node2D
 ## Filepath where all you character for the turn based combat are. they need to be structured like: res://[yourfolders]/[example]Battlechars/[speciesname]/Battle.tscn the structure is important otherwise this won't be able to find the characters. To see an example look at the template scene
 @export var CharactersPath: String
-@export var Background: Texture2D
 @export_enum("History", "Team resources") var LeftPanel = "History"
+
+@export_group("UI")
+@export var Background: Texture2D
+@export_subgroup("Theme")
+@export var EnableCustomTheme: bool
+@export var CustomTheme: Theme
+
+
 ## if true adds a little randomization to the choice of attacks the enemies do
 static var RandomizeAttacks: bool = false
 ## if true tries to prevent enemy from spamming a single attack over and over
@@ -35,8 +42,6 @@ var TurnManagerinstance: JRPGTurnManager
 
 
 func start():
-	if Background != null:
-		$Background/TextureRect.texture = Background;
 	
 	match turnmanagerstyle:
 		TurnManagerStyle.PerTeam:
@@ -64,6 +69,18 @@ func start():
 			$"UI/Main UI/HBoxContainer".add_child(teamresources)
 			teamresources.Setup(PlayerTeam)
 			$"UI/Main UI/HBoxContainer".move_child(teamresources, 0)
+			
+	if EnableCustomTheme:
+		var controlnodes = find_children("*", "Control")
+		
+		for controlnode: Control in controlnodes:
+			controlnode.theme = CustomTheme
+		
+	if Background != null:
+		$Background/TextureRect.theme = null
+		$Background/TextureRect.texture = Background;
+		$Background/TextureRect.position.x = (1152 - Background.get_size().x) / 2
+		$Background/TextureRect.position.y = (648 - Background.get_size().y) / 2
 
 func LoadChars() -> Array[JRPGBaseBattleChar]: 
 	var characters: Array[JRPGBaseBattleChar] 
